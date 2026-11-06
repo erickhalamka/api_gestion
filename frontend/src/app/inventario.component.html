@@ -1,0 +1,33 @@
+<section>
+  <h1>Panel de Control de Inventario</h1>
+
+  <p>Valor total del inventario: {{ valorTotalInventario() }}</p>
+
+  <label for="filtro-productos">Buscar producto:</label>
+  <input
+    #busqueda
+    id="filtro-productos"
+    type="search"
+    [value]="filtro()"
+    (input)="filtro.set(busqueda.value)"
+    placeholder="Nombre del producto"
+  />
+
+  <ul>
+    @for (producto of productosFiltrados(); track producto.id) {
+      <li>
+        {{ producto.nombre }} — Precio: {{ producto.precio }} — Stock:
+        {{ producto.stock }}
+        <button
+          type="button"
+          (click)="reducirStock(producto.id)"
+          [disabled]="producto.stock === 0"
+        >
+          Reducir stock
+        </button>
+      </li>
+    } @empty {
+      <li>No se encontraron productos.</li>
+    }
+  </ul>
+</section>
